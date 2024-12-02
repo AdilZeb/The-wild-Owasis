@@ -36,7 +36,7 @@ export async function createEditCabin(newData, id) {
     console.error(error);
     throw new Error("Cabin could not be created");
   }
-
+  if(hasImagePath) return data;
   // 2. Upload image
   if (hasImagePath) return data;
 
