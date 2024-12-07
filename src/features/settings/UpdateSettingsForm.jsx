@@ -31,6 +31,7 @@ function UpdateSettingsForm() {
       <FormRow label='Breakfast price'>
         <Input type='number' id='breakfast-price' defaultValue={breakfastPrice} onBlur={(e)=>handleUpdate(e,'breakfastPrice')}/>
       </FormRow>
+      
     </Form>
   );
 }
