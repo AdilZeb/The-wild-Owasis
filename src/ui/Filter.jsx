@@ -33,3 +33,20 @@ const FilterButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+
+import React from 'react'
+
+const Filter = () => {
+  function handleClick(value) {
+    
+  }
+  return (
+    <StyledFilter>
+      <FilterButton onClick={() => handleClick("all")}>All</FilterButton>
+      <FilterButton onClick={() => handleClick("with-discount")}>with discount</FilterButton>
+      <FilterButton onClick={() => handleClick("no-discount")}>no discount</FilterButton>
+    </StyledFilter>
+  )
+}
+
+export default Filter
