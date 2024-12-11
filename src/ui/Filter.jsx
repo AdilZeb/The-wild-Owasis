@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styled, { css } from "styled-components";
 
 const StyledFilter = styled.div`
@@ -33,18 +34,53 @@ const FilterButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
-
-import React from 'react'
-
-const Filter = () => {
-  function handleClick(value) {
-    
+const sortOptions=[{
+  value:'name-asc',
+  label:'sort by name A-Z'
+  },
+  {
+    value:'name-desc',
+    label:'sort by name Z-A'
+  },
+  {
+    value:'regularPrice-asc',
+    label:'sort by price (low first)'
+  },
+  {
+    value:'regularPrice-desc',
+    label:'sort by price (high first)'
+  },{
+    value:'maxCapacity-asc',
+    label:'sort by capacity (low first)'
+  },{
+    value:'maxCapacity-desc',
+    label:'sort by capacity (high first)'
   }
+]
+
+import { useSearchParams } from "react-router-dom";
+import SortBy from "./SortBy";
+
+const Filter = ({filterField,options}) => {
+  const [searchParams,setSetParams]= useSearchParams();
+  function handleClick(value) {
+     searchParams.set(filterField,value);
+     setSetParams(searchParams)
+  }
+  const currentFilter= searchParams.get(filterField) || options[0].value;
   return (
     <StyledFilter>
-      <FilterButton onClick={() => handleClick("all")}>All</FilterButton>
-      <FilterButton onClick={() => handleClick("with-discount")}>with discount</FilterButton>
-      <FilterButton onClick={() => handleClick("no-discount")}>no discount</FilterButton>
+    {options.map((option) => (
+      <FilterButton
+        key={option.value}
+        onClick={() => handleClick(option.value)}
+        active={option.value === currentFilter}
+        disabled={option.value === currentFilter} 
+      >
+        {option.label}
+      </FilterButton>
+    ))}
+    <SortBy options={sortOptions}></SortBy>
     </StyledFilter>
   )
 }

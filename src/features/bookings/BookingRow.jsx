@@ -44,7 +44,7 @@ function BookingRow({
     numGuests,
     totalPrice,
     status,
-    guests: { fullName: guestName, email },
+    // guests: { fullName: guestName, email },
     cabins: { name: cabinName },
   },
 }) {
@@ -58,10 +58,10 @@ function BookingRow({
     <Table.Row>
       <Cabin>{cabinName}</Cabin>
 
-      <Stacked>
+      {/* <Stacked>
         <span>{guestName}</span>
         <span>{email}</span>
-      </Stacked>
+      </Stacked> */}
 
       <Stacked>
         <span>
