@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
 
@@ -6,6 +7,9 @@ import Table from "../../ui/Table";
 
 import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
+import Button from "../../ui/Button";
+import { HiEye } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -44,7 +48,8 @@ function BookingRow({
     numGuests,
     totalPrice,
     status,
-    // guests: { fullName: guestName, email },
+    guests,
+   
     cabins: { name: cabinName },
   },
 }) {
@@ -54,14 +59,15 @@ function BookingRow({
     "checked-out": "silver",
   };
 
+  const navigate= useNavigate();
   return (
     <Table.Row>
       <Cabin>{cabinName}</Cabin>
 
-      {/* <Stacked>
-        <span>{guestName}</span>
-        <span>{email}</span>
-      </Stacked> */}
+       <Stacked>
+        <span>{guests?.fullName}</span>
+        <span>{guests?.email}</span>
+      </Stacked> 
 
       <Stacked>
         <span>
@@ -79,6 +85,7 @@ function BookingRow({
       <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
 
       <Amount>{formatCurrency(totalPrice)}</Amount>
+      <Button onClick={()=>navigate(`/bookings/${bookingId}`)}><HiEye/></Button>
     </Table.Row>
   );
 }
