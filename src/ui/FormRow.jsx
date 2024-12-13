@@ -37,7 +37,7 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 // eslint-disable-next-line react/prop-types
-const FormRow = ({ label, error, children }) => {
+const FormRow= ({ label, error, children }) => {
   return (
     <StyledFormRow>
       <Label htmlFor={children?.props?.id}>{label}</Label>
