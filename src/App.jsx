@@ -11,9 +11,12 @@ import Users from "./pages/Users";
 import PageNotFound from "./pages/PageNotFound";
 import Applayout from "./ui/Applayout";
 import Booking from "./pages/Booking";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
+import ProctedRoutes from "./ui/ProctedRoutes";
+import { DarkModeProvider } from "./context/DarkModeContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,16 +27,17 @@ const queryClient = new QueryClient({
 });
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
+    <DarkModeProvider>
+<QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <GlobalStyled />
       <BrowserRouter>
         <Routes>
-          <Route element={<Applayout />}>
+          <Route element={<ProctedRoutes ><Applayout /></ProctedRoutes>}>
             <Route
               index
               element={<Navigate to="/dashboard" replace={true} />}
-            />
+              />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="account" element={<Account />} />
             <Route path="bookings" element={<Bookings />} />
@@ -64,8 +68,9 @@ const App = () => {
           background: "var(--color-grey-0)",
           color: "var(--color-grey-700)",
         }}
-      />
+        />
     </QueryClientProvider>
+        </DarkModeProvider>
   );
 };
 
