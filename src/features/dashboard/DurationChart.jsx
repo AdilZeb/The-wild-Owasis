@@ -1,5 +1,7 @@
 import styled from "styled-components";
-
+import Heading from "../../ui/Heading";
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import {useDarkMode}  from "/src/context/DarkModeContext";
 const ChartBox = styled.div`
   /* Box */
   background-color: var(--color-grey-0);
@@ -26,17 +28,17 @@ const startDataLight = [
   },
   {
     duration: "2 nights",
-    value: 0,
+    value: 2,
     color: "#f97316",
   },
   {
     duration: "3 nights",
-    value: 0,
+    value: 3,
     color: "#eab308",
   },
   {
     duration: "4-5 nights",
-    value: 0,
+    value: 7,
     color: "#84cc16",
   },
   {
@@ -46,7 +48,7 @@ const startDataLight = [
   },
   {
     duration: "8-14 nights",
-    value: 0,
+    value: 8,
     color: "#14b8a6",
   },
   {
@@ -56,7 +58,7 @@ const startDataLight = [
   },
   {
     duration: "21+ nights",
-    value: 0,
+    value: 4,
     color: "#a855f7",
   },
 ];
@@ -69,7 +71,7 @@ const startDataDark = [
   },
   {
     duration: "2 nights",
-    value: 0,
+    value: 3,
     color: "#c2410c",
   },
   {
@@ -79,7 +81,7 @@ const startDataDark = [
   },
   {
     duration: "4-5 nights",
-    value: 0,
+    value: 8,
     color: "#4d7c0f",
   },
   {
@@ -89,7 +91,7 @@ const startDataDark = [
   },
   {
     duration: "8-14 nights",
-    value: 0,
+    value: 9,
     color: "#0f766e",
   },
   {
@@ -99,7 +101,7 @@ const startDataDark = [
   },
   {
     duration: "21+ nights",
-    value: 0,
+    value: 4,
     color: "#7e22ce",
   },
 ];
@@ -130,3 +132,37 @@ function prepareData(startData, stays) {
 
   return data;
 }
+
+
+
+const DurationChart = ({confirmedStays}) => {
+  const {isDarkMode} = useDarkMode();
+  const startdata= isDarkMode? startDataDark : startDataLight;
+  const dataWithValues = prepareData(startdata, confirmedStays);
+  return (
+<ChartBox>
+  <Heading as="h3">stay duration summary</Heading>
+  <ResponsiveContainer height={300} width="100%">
+   <PieChart>
+    <Pie data={startDataLight} nameKey="duration" dataKey='value' cx="40%" cy="50%" innerRadius={85} outerRadius={110} paddingAngle={3}>
+      {
+        startDataLight?.map((entry, i) => (
+          <Cell key={i} fill={entry.color} stroke={entry.color}/>
+        ))
+      }
+    </Pie>
+    <Legend
+      iconType="circle"
+      layout="vertical"
+      verticalAlign="middle"
+      align="right"
+    />
+
+    <Tooltip />
+   </PieChart>
+  </ResponsiveContainer>
+</ChartBox>
+  )
+}
+
+export default DurationChart
